@@ -1,0 +1,13 @@
+project:
+  id: p2-test
+  name: P2 test
+methodology: scrum
+repositories:
+- id: backend
+  name: backend
+  path: repos/backend
+  url: https://github.com/jlbokass/OCP2-Back-end-java.git
+- id: frontend
+  name: frontend
+  path: repos/frontend
+  url: https://github.com/jlbokass/OCP2-Front-end-angular.git
