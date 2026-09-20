@@ -72,7 +72,7 @@ Appliquer le workflow Git aux changements conservés : branches courtes depuis `
 ## 6. Suivi du sprint
 
 - [x] **SPIKE-001 — Observer le starter sans modification** — Done
-- [ ] **SPIKE-002 — Valider les références et mécanismes Docker** — In progress
+- [x] **SPIKE-002 — Valider les références et mécanismes Docker** — Done
 
 ## 7. Questions / mentor
 
