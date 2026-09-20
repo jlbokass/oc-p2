@@ -1,4 +1,4 @@
-# Sprint actuel
+# Sprint 001
 
 > Projet : **oc-p2**. Contenu destiné à `management/sprint.md`, à versionner avec le workspace. Le fichier n’a pas été modifié : l’environnement est en lecture seule.
 
