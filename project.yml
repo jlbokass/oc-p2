@@ -1,6 +1,6 @@
 project:
-  id: p2-test
-  name: P2 test
+  id: oc-p2
+  name: oc p2
 methodology: scrum
 repositories:
 - id: backend
