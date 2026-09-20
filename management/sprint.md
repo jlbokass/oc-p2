@@ -69,19 +69,24 @@ Appliquer le workflow Git aux changements conservés : branches courtes depuis `
 | US-001, US-002, TECH-005 | Contrats, environnement et vérifications préalables encore nécessaires ; le MVP complet n’est pas promis dans ce sprint. |
 | SPIKE-006 à SPIKE-008 | Après-MVP et sans contribution nécessaire à la démonstration technique retenue. |
 
-## 6. Questions / mentor
+## 6. Suivi du sprint
+
+- [x] **SPIKE-001 — Observer le starter sans modification** — Done
+- [ ] **SPIKE-002 — Valider les références et mécanismes Docker** — In progress
+
+## 7. Questions / mentor
 
 - **Non bloquante pour les essais techniques :** l’exécution des prérequis dans Docker satisfait-elle leur formulation officielle ? Docker-first est déjà retenu ; une réponse attendue ne justifie pas d’imposer les runtimes natifs.
 - **Non bloquante en conservant Maven 3.9.3 :** le wrapper 3.9.11 peut-il être utilisé comme référence ? Toute substitution nécessite une décision explicite.
 - **À résoudre dans SPIKE-002, bloquantes pour les implémentations correspondantes :** quelles versions exactes de Node/npm/MySQL, quel chargement de configuration et quels mécanismes d’orchestration et de rechargement retenir au vu des essais ? Documenter les choix techniques ; solliciter le mentor sur les divergences avec les consignes.
 
-## 7. Ajustements du backlog à valider
+## 8. Ajustements du backlog à valider
 
 - **Dépendance au retour mentor dans SPIKE-002 :** le backlog inclut la confirmation pédagogique Docker-first parmi les préalables de TECH-001 et TECH-002, alors que cette stratégie est déjà retenue. Rendre ce seul retour **non bloquant techniquement**, tant qu’aucune incompatibilité concrète n’est identifiée. Conserver la question et son état de réponse ; maintenir comme bloquantes les décisions de versions, configuration et mécanismes réellement nécessaires.
 
 Le backlog n’est pas modifié et aucun statut n’est changé implicitement.
 
-## 8. Checklist de clôture
+## 9. Checklist de clôture
 
 - [ ] Objectif du sprint démontré
 - [ ] Items engagés terminés ou écarts explicités
