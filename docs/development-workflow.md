@@ -2,271 +2,269 @@
 
 ## 1. Objectif et principes
 
-Développer efficacement seul avec mentorat, rendre le démarrage reproductible et conserver des preuves simples du fonctionnement.
+Développer seul avec mentorat, avec un environnement reproductible, des changements traçables et des vérifications proportionnées. Ce workflow prépare le backlog sans définir de tickets, d’estimations ni de sprints.
 
-**Sources, par priorité :** `docs/cadrage.md`, `mentoring/recommendations.md`, `audits/project-audit.md`, `project.yml`, puis configurations observées dans les repositories. Les identifiants **EX-*** renvoient au cadrage. Les réserves anciennes de l’audit sur l’absence de périmètre sont dépassées par le cadrage validé.
+**Origine des règles :**
 
-Les règles d’organisation ci-dessous sont des **décisions de projet**, sauf mention d’une exigence officielle ou d’une recommandation du mentor. Elles n’ajoutent pas d’obligations OpenClassrooms.
+- **Officiel — EX-xx** : exigences de `docs/cadrage.md`, prioritaires.
+- **Mentor — REC-MENTOR-xxx** : recommandations retenues dans `mentoring/recommendations.md`, distinctes des obligations OpenClassrooms.
+- **Décision de projet** : conventions pratiques définies ci-dessous, fondées sur l’existant et les risques de l’audit.
 
-Principes quotidiens :
-
-- Une intention à la fois, des changements limités et vérifiables.
-- Respecter l’existant et documenter seulement les décisions utiles.
-- Préserver le contrat HTTP entre les deux repositories.
-- Conserver une preuve courte : commande, résultat, version testée.
-- Aucun backlog, ticket, chiffrage ou sprint n’est défini ici.
-
-**État de vérification :** inspection en lecture seule des commits backend `09cb199` et frontend `2a2d0e9`, sans modification locale observée. Aucun réseau, installation, démarrage, build ou test exécuté pour ce document. Les commandes indiquées restent à valider à l’exécution.
+L’inspection a été réalisée en lecture seule, sans réseau, installation, démarrage ni test. Une commande présente dans les fichiers n’est donc pas une commande validée à l’exécution. Les mentions anciennes de l’audit sur l’absence de cadrage sont dépassées par le cadrage validé.
 
 ## 2. Repositories et responsabilités
 
 | Repository | Responsabilité | Règles spécifiques |
 |---|---|---|
-| `repos/backend` | API Spring Boot, authentification, traitements métier, persistance MySQL | Controllers → services → repositories ; échanges par DTO ; aucune entité exposée dans les controllers — EX-11 |
-| `repos/frontend` | Interface Angular, formulaires, navigation et appels HTTP | Données conformes aux DTO ; états d’interface explicites ; Guard pour les routes étudiants — EX-07, EX-08, EX-14, EX-15 |
+| `repos/backend` | API Spring Boot, authentification, traitements et persistance MySQL | Java, Maven, DTO, services, repositories, JUnit/Mockito |
+| `repos/frontend` | Interface Angular, formulaires, navigation et appels HTTP | TypeScript strict, composants/services, Guard, Jest puis Cypress |
+| Workspace `oc-p2` | Documentation, décisions et future orchestration commune | Conserver les références aux deux commits utilisés pour une démonstration |
 
-Règles communes : Git, secrets, traçabilité, contrôles avant merge et Definition of Done. Chaque repository conserve ses propres commandes et dépendances.
+`project.yml` identifie actuellement le workspace comme `oc-p2` ; `p2-test` reste une ancienne identification dans le cadrage et l’audit.
 
-Pour un changement transversal, préciser requête, réponse et statut HTTP attendus ; relever les deux commits lors de la démonstration commune.
+**Règles communes :** petites modifications, secrets exclus de Git, contrat HTTP explicite, contrôles avant merge. Une évolution transversale possède un changement cohérent dans chaque repository ; les DTO et réponses attendues servent de contrat commun.
 
 ## 3. MVP pédagogique
 
-**Décision de projet :** retenir comme premier jalon le parcours **inscription existante vérifiée → connexion depuis Angular → réception d’un JWT**. Il apporte une progression full-stack démontrable sans dépendre des règles étudiants encore inconnues.
+**Décision de projet :** démontrer le parcours « inscription d’un agent, puis connexion depuis Angular avec réception d’un JWT », dans l’environnement Docker-first retenu. Ce jalon prépare le CRUD sans dépendre des règles étudiants encore inconnues.
 
 | Élément | Objectif | Preuve de réussite | Dépendances |
 |---|---|---|---|
-| Exploration et inscription | Comprendre puis vérifier le starter sans modifier son code — EX-03, EX-04 | Applications démarrées ; agent créé depuis `/register` ; réponse `201` et trace d’insertion observées, sans données sensibles dans les preuves | Environnement local opérationnel |
-| Authentification backend | Corriger `/api/login` — EX-05, EX-06 | Connexion valide dans Postman retournant un JWT ; tests ciblés du service et de l’API réussis | Exploration terminée ; compte de démonstration ; contrat de réponse précisé |
-| Authentification frontend | Ajouter une route et un formulaire simples — EX-07, EX-08 | Connexion contre l’API réelle ; token reçu ; chargement, succès et affichage des erreurs implémentés | API vérifiée ; DTO et réponse convenus |
-| Validation du jalon | Rendre le parcours répétable et testable | Cas nominaux documentés avec entrées/sorties ; suites existantes et tests ciblés JUnit/Mockito et Jest réussis ; procédure de démonstration courte | Analyse des tests et plan ciblé — EX-17, EX-18 |
+| Observation initiale | Comprendre et vérifier le starter avant modification — EX-03/04 | Notes sur les échanges, inscription depuis `/register`, réponse `201` et trace d’insertion sans donnée sensible | Environnement initial accessible ; tout blocage est consigné |
+| Socle Docker de développement et de tests | Rendre le parcours et les vérifications reproductibles — recommandations mentor | Lancement commun, inscription réelle, exécution des suites existantes dans un environnement de tests isolé ; modification des sources prise en compte | Observation initiale ; raccordements Docker et configuration validés |
+| Connexion backend | Corriger `/api/login` — EX-05/06 | Identifiants valides → JWT ; vérification Postman et tests ciblés | Agent enregistré, contrat de réponse défini |
+| Connexion frontend | Ajouter la route et le formulaire — EX-07/08 | Connexion contre l’API réelle, token reçu, états chargement/succès/erreur implémentés ; tests Jest du parcours nominal | API vérifiée, DTO concordants |
+| Preuve du jalon | Montrer un résultat répétable | Parcours inscription → connexion, résultats des tests, versions et couple de commits consignés | Éléments précédents ; méthode de vérification des erreurs clarifiée |
 
-L’ajout de tests ciblés pendant le développement est une décision de projet ; il ne remplace pas l’exercice complet de tests. La vérification des erreurs reste soumise à la clarification d’EX-19.
+L’exploration initiale reste sans modification du code. Si elle est bloquée, documenter l’obstacle avant toute adaptation ; une exécution après adaptation ne doit pas être présentée comme une validation du starter inchangé.
 
 ### Après le MVP
 
 Restent obligatoires :
 
-- Les cinq API étudiants, leurs contrôles Postman et leur protection Bearer Token — EX-09 à EX-13.
-- Les cinq opérations depuis les écrans Angular, avec Guard et backend réel — EX-14, EX-15.
-- La couverture complète des services, composants, nouveaux controllers et écrans, avec JUnit/Mockito, Jest et Cypress — EX-20 à EX-28.
-- Trois rapports distincts atteignant chacun **80 % minimum** : backend, frontend et E2E.
-- Les autoévaluations et le bilan mentor — EX-29.
+- les cinq API étudiants, leur vérification Postman et leur protection Bearer Token ;
+- les cinq opérations dans Angular, les échanges conformes aux DTO et les Guard ;
+- le plan de test complet, tous les services backend testés et les nouveaux controllers testés en intégration ;
+- tous les services et composants frontend couverts avec Jest, tous les écrans couverts avec Cypress et des API mockées ;
+- trois rapports distincts atteignant chacun **80 % minimum** : backend, frontend et E2E ;
+- les autoévaluations et le bilan mentor.
 
-Respecter l’ordre officiel : authentification backend, authentification frontend, API CRUD complètes, puis écrans CRUD — EX-16. Le MVP ne réduit aucune exigence finale.
+Le MVP n’atteste ni la conformité complète du projet ni l’atteinte des couvertures finales.
 
 ## 4. Recommandations du mentor
 
-Les statuts suivants constituent l’arbitrage proposé par ce workflow ; les recommandations restent identifiées comme telles.
+« Retenue » indique une orientation adoptée, pas une réalisation déjà disponible.
 
 | ID | Recommandation | Statut | Traduction concrète dans le workflow | Justification |
 |---|---|---|---|---|
-| REC-MENTOR-001 | Hot reload avec volumes Docker | à valider | Étudier un montage des sources et un processus de surveillance/recompilation uniquement si les applications sont conteneurisées pour le développement | Seul MySQL est conteneurisé. Un volume seul ne déclenche pas de rechargement ; Angular dispose déjà de son serveur de développement |
-| REC-MENTOR-002 | Configuration du poste dans `.env.local` | à valider | Retenir immédiatement la séparation secrets/configuration versionnée ; confirmer ensuite le chargement explicite de `.env.local` côté backend et Compose | `AppConfig.java` charge actuellement uniquement `.env`. Aucun chargement `.env.local` n’est configuré côté Angular |
+| REC-MENTOR-001 | Compose global | retenue | Orchestrer frontend, backend et MySQL depuis le workspace | Simplifier le lancement commun |
+| REC-MENTOR-002 | Compose dédié aux tests | retenue | Séparer exécution, configuration et données de tests du développement | Obtenir des résultats reproductibles sans toucher aux données locales |
+| REC-MENTOR-003 | Validation de l’intégration | retenue | Démontrer les parcours contre l’API et MySQL réels ; relever les deux commits | Les tests isolés ne prouvent pas le raccordement global |
+| REC-MENTOR-004 | Tests fonctionnels et d’intégration | retenue | Exécuter les vérifications utiles et corriger les défauts ; respecter les limites EX-19 | Valider l’ensemble sans élargir implicitement les consignes officielles |
+| REC-MENTOR-005 | Fichier dédié de configuration et secrets | retenue | Fichier local ignoré et exemple versionné sans secrets ; nom et chargement à valider | Éviter les valeurs sensibles dans le code et Git |
+| REC-MENTOR-006 | Hot reload par volumes | retenue | Monter les sources ; définir séparément la surveillance Angular et la recompilation/reprise Spring Boot | Raccourcir la boucle de développement |
 
-Ces validations ne bloquent pas l’exploration du starter avec des données fictives.
+La stratégie **Docker-first** est également une décision de projet déjà retenue dans le document de mentorat.
 
 ## 5. Workflow Git
 
 **Décision de projet :**
 
 - Conserver `main`, déjà présente dans les deux repositories, comme branche stable.
-- Créer une branche par changement cohérent ; la fusionner dès sa Definition of Done atteinte.
-- Ne pas ajouter de branche `develop` ou de cycle de release pour ce projet individuel.
-- Relire soi-même le diff avant merge. Une PR est facultative, utile pour une question précise au mentor ou un changement transversal.
-- Privilégier un merge fast-forward lorsque possible ; supprimer la branche après intégration.
-- Ne pas réécrire l’historique partagé ni forcer un push sur `main`.
+- Partir de `main` pour une modification courte et cohérente ; éviter une branche `develop` et les branches de longue durée.
+- Fusionner après relecture du diff et réussite des contrôles pertinents. Utiliser un fast-forward lorsque possible.
+- Une PR est facultative pour le travail courant ; elle devient utile pour une relecture mentor ou une modification transversale nécessitant du contexte.
+- Pour un changement front/back, vérifier les deux branches ensemble avant leur intégration et relever le couple de commits obtenu.
+- Ne pas réécrire l’historique partagé. Supprimer la branche de travail après intégration.
 
-La stabilité initiale reste à démontrer. Une anomalie héritée doit être consignée et traitée explicitement, sans annoncer une validation réussie.
+Les commits et publications relèvent de l’exécution future du workflow ; aucun n’est effectué dans cette préparation.
 
 ## 6. Convention de nommage des branches
 
-Avant le backlog : `<type>/<slug>`, par exemple `fix/login-jwt`.
+**Décision de projet :** `<type>/<ticket>-<slug>`, avec `feature`, `fix`, `test`, `chore` ou `docs`.
 
-Lorsque les tickets existeront : `<type>/<ticket>-<slug>`.
+Le slug utilise des mots courts en minuscules, séparés par des tirets, sans accents. Dès que le backlog existe, reprendre son identifiant réel, sans inventer une numérotation parallèle.
 
-| Type | Usage |
-|---|---|
-| `feature` | Fonctionnalité |
-| `fix` | Correction |
-| `test` | Travail consacré aux tests |
-| `chore` | Configuration ou maintenance |
-| `docs` | Documentation seule |
-
-Utiliser un slug court en minuscules, sans accents, séparé par des tirets. Reprendre l’identifiant exact du futur ticket. Un changement transversal utilise le même identifiant dans les deux repositories.
+Avant le backlog, omettre l’identifiant : `fix/login-jwt`, `feature/login-page`, `chore/docker-dev`. Pour une modification transversale, reprendre le même identifiant dans les deux repositories.
 
 ## 7. Convention de commits
 
-**Décision de projet : Conventional Commits**, sans incompatibilité observée avec l’historique initial.
+**Décision de projet :** Conventional Commits, sous la forme `type(scope): description`. L’historique inspecté contient des commits initiaux génériques ; aucune incompatibilité n’a été identifiée.
 
-Format : `<type>(<scope>): <intention>`.
-
-| Repository | Scopes utiles | Exemple |
+| Périmètre | Scopes utiles | Exemple |
 |---|---|---|
-| Backend | `auth`, `students`, `config` | `fix(auth): retourner un JWT après connexion valide` |
-| Frontend | `auth`, `students`, `routing` | `feat(auth): ajouter le formulaire de connexion` |
-| Les deux | Domaine concerné | `test(auth): couvrir la connexion nominale` |
+| Backend | `auth`, `students`, `config`, `tests` | `fix(auth): vérifier le mot de passe avec le hash enregistré` |
+| Frontend | `auth`, `students`, `routing`, `tests` | `feat(auth): ajouter le formulaire de connexion` |
+| Orchestration/documentation | `docker`, `workflow` | `chore(docker): isoler les données de test` |
 
-Employer notamment `feat`, `fix`, `test`, `refactor`, `chore`, `docs`. Le scope reste facultatif.
-
-Un commit représente une intention cohérente ; il peut réunir code et tests associés. Séparer les reformattages sans rapport. Mentionner dans le corps le futur ticket, l’EX concernée ou la décision technique lorsque cela aide la traçabilité.
+Un commit représente une intention cohérente, avec ses tests et sa documentation utile. Séparer un reformatage global d’un changement fonctionnel ; éviter les commits mélangeant correction, dépendances et nettoyage sans rapport. Mentionner ultérieurement le ticket dans le corps du commit.
 
 ## 8. Standards de code par repository
 
-### Backend Java
+### Backend
 
-**Existant :** packages par couche, classes `PascalCase`, méthodes `camelCase`, indentation Java généralement à quatre espaces, injection par constructeur via Lombok, mapping MapStruct avec contrôle des propriétés non mappées. Aucun formateur ou analyseur dédié configuré.
+**Existant :** Java 21 déclaré, Spring Boot 3.5.5, couches distinctes, Lombok, MapStruct avec contrôle strict des mappings, injection par constructeur dans les services. Aucun formatter, Checkstyle, PMD ou SpotBugs dédié n’a été identifié.
 
-**Décisions de projet :**
+**Règles retenues :**
 
-- Conserver ces conventions : packages en minuscules, constantes `UPPER_SNAKE_CASE`, suffixes `Controller`, `Service`, `Repository`, `DTO` et `Test`.
-- Respecter EX-11 ; garder les traitements métier dans les services.
-- Formater les portions modifiées avec l’IDE en respectant le fichier existant ; éviter les reformattages globaux.
-- Utiliser d’abord compilation, contrôle MapStruct et tests. Ils ne constituent pas un lint général.
-- Ne pas ajouter Checkstyle, Spotless, PMD ou Sonar sans problème concret à résoudre.
+- Respecter les couches et les DTO ; aucune entité dans les controllers du CRUD — EX-11.
+- Conserver les packages existants, les classes en `PascalCase`, méthodes/champs en `camelCase`, constantes en `UPPER_SNAKE_CASE`.
+- Pour le nouveau Java, reprendre l’indentation observée de quatre espaces et le style du fichier modifié. Ne pas renommer massivement les particularités du starter.
+- Garder les traitements dans les services et des controllers courts ; réutiliser les mécanismes d’injection et de mapping présents.
 
-Il n’existe pas de standard Java unique équivalent aux PSR PHP : conventions de code, formatage et analyse statique restent trois sujets distincts.
+**Distinction des contrôles :** les conventions décrivent l’organisation et le nommage ; le formatage concerne la présentation ; l’analyse statique recherche des défauts. Java n’a pas d’équivalent universel unique aux PSR PHP. La compilation et les contrôles MapStruct restent le socle actuel ; aucun analyseur supplémentaire n’est imposé sans problème concret à résoudre.
 
-### Frontend Angular/TypeScript
+### Frontend
 
-**Existant :** composants standalone, services HTTP, fichiers `*.component.ts` et `*.service.ts`, `.editorconfig`, TypeScript strict et templates stricts. Aucun ESLint ni Prettier configuré.
+**Existant :** composants standalone, séparation `pages`/`core`/`shared`, TypeScript et templates stricts. `.editorconfig` impose deux espaces, UTF-8, fin de ligne finale et apostrophes en TypeScript. Aucun ESLint ou Prettier configuré.
 
-**Décisions de projet :**
+**Règles retenues :**
 
-- S’appuyer sur les principes de l’Angular Style Guide compatibles avec Angular 19 et l’organisation existante : responsabilités ciblées, fichiers explicites, tests proches du code.
-- Conserver les suffixes existants ; utiliser `kebab-case` pour les nouveaux fichiers, `PascalCase` pour classes/interfaces et `camelCase` pour membres. Ne pas renommer `Register.ts` uniquement pour harmoniser.
-- Préserver les contrôles TypeScript ; typer précisément les DTO et réponses HTTP, sans `any` de contournement.
-- Appliquer `.editorconfig` : deux espaces, UTF-8, fin de fichier et apostrophes simples en TypeScript.
-- Garder les appels HTTP dans les services et la logique métier hors des templates.
-- Utiliser le build pour les contrôles TypeScript/templates ; il ne remplace pas un lint.
-- Ne pas imposer ESLint/Prettier sans bénéfice identifié. Conserver la présentation simple demandée par le cadrage.
+- Conserver cette organisation ; composants pour l’interface, services pour HTTP et logique réutilisable.
+- Utiliser l’Angular Style Guide compatible avec Angular 19 comme repère d’organisation, en préservant les conventions du starter.
+- Pour les nouveaux fichiers : `login.component.ts`, `auth.service.ts`, `*.spec.ts` ; classes/interfaces en `PascalCase`, membres en `camelCase`, sélecteurs préfixés `app-`.
+- Conserver les options TypeScript strictes et typer précisément les contrats HTTP, notamment les réponses sans corps.
+- Appliquer `.editorconfig` et le formatage de l’éditeur sur les zones modifiées.
+
+L’Angular Style Guide, le typage TypeScript, le lint et le formatage ont des rôles distincts. Le build vérifie notamment types et templates ; il ne remplace pas un linter. Aucun ESLint/Prettier supplémentaire n’est retenu à ce stade.
 
 ## 9. Environnement de développement
 
-| Sujet | Référence ou état observé | Règle |
+### Références et installation
+
+| Élément | Référence |
+|---|---|
+| Java | **21**, exigence officielle ; JDK 25 audité non retenu comme référence |
+| Maven | **3.9.3**, exigence officielle ; wrapper existant **3.9.11**, écart à confirmer |
+| Angular / TypeScript | Angular **19**, existant 19.2 ; TypeScript **5.7.3** verrouillé |
+| Spring Boot | **3.5.5**, conserver l’existant |
+| Node / npm | Versions exactes à fixer dans l’image après validation avec Angular et le lockfile ; les versions auditées ne constituent pas une référence validée |
+| MySQL | Version exacte à fixer pour développement et tests ; `mysql:latest` observé ne garantit pas la reproductibilité |
+
+**Hôte :** Docker Desktop avec Compose, Git, éditeur, navigateur et Postman pour les contrôles prescrits. Java, Maven, Node, npm et Angular CLI s’exécutent dans les conteneurs ; aucune installation native n’est nécessaire au workflow courant.
+
+**Divergence visible :** les prérequis officiels sont formulés comme des installations locales. Leur exécution dans Docker constitue une décision de projet à confirmer avec le mentor, sans modifier les versions officiellement demandées.
+
+### Configuration et orchestration
+
+**Proposition à valider pour REC-MENTOR-005 :** centraliser les valeurs dans un `.env.local` à la racine du workspace et versionner un `.env.example` contenant seulement noms, indications et valeurs factices.
+
+- Ignorer les fichiers locaux dans le repository qui les contient. Un fichier déjà suivi doit aussi être retiré du suivi ; `.gitignore` seul ne suffit pas.
+- Fournir au backend `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, `DB_NAME`, puis la configuration JWT nécessaire. Aucun secret dans Angular.
+- Définir explicitement interpolation Compose, injection dans les services et chargement Spring. `--env-file` ne transmet pas automatiquement toutes les variables aux applications.
+- Adapter le chargement actuel : `AppConfig` lit obligatoirement un fichier `.env` relatif. Le changement de nom ou l’injection de variables ne suffit donc pas à lui seul.
+- Dans Docker, adapter le proxy Angular actuellement dirigé vers `localhost:8080` pour joindre le service backend ; utiliser également le service MySQL comme hôte de base.
+- Éviter deux responsables concurrents du démarrage MySQL : l’articulation entre Compose global et `spring-boot-docker-compose` doit être explicite.
+
+Le Compose global et le Compose de tests restent à créer. Les tests doivent avoir leurs propres données et ressources ; aucune commande courante ne doit supprimer le volume de développement.
+
+### Volumes et hot reload
+
+**Principe retenu, mécanismes à valider :**
+
+- Angular : sources montées, serveur de développement accessible depuis l’hôte, dépendances conservées dans l’environnement Linux du conteneur ; polling seulement si nécessaire.
+- Spring Boot : sources montées **et recompilation automatique**. Un volume seul ne recharge pas Java ; le mécanisme de compilation/reprise, éventuellement DevTools, doit être démontré avant adoption.
+- Conserver les caches de dépendances pour éviter de réinstaller à chaque modification. Reconstruire lorsque les images ou dépendances changent.
+
+### Commandes repérées
+
+À exécuter ultérieurement dans le conteneur approprié, depuis la racine du repository :
+
+| Usage | Commande | Statut |
 |---|---|---|
-| Java / Maven | Java 21 et Maven 3.9.3 officiels ; wrapper 3.9.11 présent | Utiliser la référence officielle ; faire confirmer l’écart du wrapper avant de le retenir |
-| Backend | Spring Boot 3.5.5 | Conserver les dépendances du `pom.xml` |
-| Frontend | Angular 19.2 ; TypeScript 5.7.3 verrouillé ; Jest 29.7 | Conserver le lockfile |
-| Node / npm | Aucun couple fixé ; versions auditées non validées | Choisir puis documenter un couple compatible ; les champs `engines` du lockfile ne prouvent pas la réussite du projet |
-| MySQL | `mysql:latest` en développement et tests | Proposer une version fixe commune après validation |
-| Docker | Docker, Compose et Desktop demandés — EX-02 | Nécessaires à MySQL et aux tests Testcontainers |
+| Backend | `mvn spring-boot:run` | Documentée ; configuration Docker à adapter |
+| Frontend | `npm run start` | Script présent |
+| Installation frontend | `npm ci` | Décision de projet pour reproduire le lockfile ; à valider dans l’image |
+| Build frontend | `npm run build` | Script présent |
 
-**Installation future :** utiliser les versions retenues. Le cadrage indique `npm install` ; pour reproduire le lockfile existant, retenir `npm ci` comme décision de projet. Aucun ajout de dépendance sans besoin identifié.
-
-**Commandes présentes ou documentées, non exécutées ici :**
-
-| Depuis | Commande | Condition |
-|---|---|---|
-| `repos/backend` | `mvn spring-boot:run` | Java 21, Maven 3.9.3, Docker et configuration locale prêts |
-| `repos/frontend` | `npm run start` | Dépendances installées ; proxy `/api` vers `localhost:8080` configuré |
-| `repos/frontend` | `npm run build` | Build de production configuré |
-
-Le README backend prévoit le démarrage via Spring Boot et son intégration Compose. Vérifier ce fonctionnement avant d’ajouter un lancement Compose séparé. Le port MySQL publié par `'3306'` n’est pas garanti fixe côté hôte : vérifier la connexion effective.
-
-**Configuration et secrets :**
-
-- Le backend utilise `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, `DB_NAME` et charge `.env` relativement au répertoire de lancement.
-- Versionner uniquement un exemple tel que `.env.example`, avec valeurs fictives ou champs à renseigner.
-- Exclure les fichiers contenant des valeurs locales/réelles. Le `.env` backend est actuellement suivi : ajouter une règle d’ignore ne suffira pas à le retirer du suivi.
-- Préparer la migration vers `.env.local` après validation de REC-MENTOR-002 ; ne pas supposer son chargement automatique par Spring, Compose ou Angular.
-- Ne jamais transmettre de secret serveur au frontend : toute configuration intégrée au navigateur est publique.
-
-Conserver le volume MySQL `db_data` ; ne pas le supprimer pendant un redémarrage ordinaire. Angular utilise son rechargement de développement existant. Le backend est redémarré après modification ; aucun hot reload Docker n’est encore établi.
+Aucune commande de lancement global n’est actuellement démontrée. Les commandes Compose exactes devront être documentées après création et vérification des fichiers.
 
 ## 10. Workflow de tests
 
-Respecter la progression de l’exercice : analyse des tests existants → plan avec entrées/sorties → backend → frontend → E2E. Lire les documentations Jest et Cypress avant leurs étapes respectives.
+**Routine :** préciser les entrées/sorties attendues avant le développement, écrire les tests concernés avec le changement, lancer les tests ciblés pendant le travail puis la suite du repository avant merge. Le TDD est utilisable, sans devenir une obligation systématique.
 
-| Niveau | Attente officielle | Exécution disponible ou à préparer |
-|---|---|---|
-| Backend unitaire | Tous les services, JUnit/Mockito — EX-20 | `mvn test` ; ciblage possible avec `mvn -Dtest=UserServiceTest test` |
-| Backend intégration | Nouveaux controllers — EX-20 | `mvn test` inclut les `*Test` existants ; Docker requis pour MySQL Testcontainers |
-| Frontend unitaire/intégration | Tous les services et composants, Jest — EX-23, EX-24 | `npm test` ; `npm run test:watch` pendant le développement |
-| E2E | Tous les écrans, Cypress, API mockées — EX-26, EX-28 | Cypress absent : configuration et commande reproductible à ajouter |
+| Niveau | Attente officielle et application |
+|---|---|
+| Backend | JUnit/Mockito ; tous les services en unitaire, nouveaux controllers en intégration. Réutiliser Spring/MockMvc/Testcontainers existants. Un cas précis, commenté et validé avant le suivant — EX-20/22 |
+| Frontend | Jest pour services et composants, en unitaire et intégration ; assertions sur les comportements et échanges utiles — EX-23/24 |
+| E2E | Cypress, tous les écrans, appels API mockés ; commencer par les formulaires simples et valider chaque test avant le suivant — EX-26/28 |
+| Fonctionnement réel | Postman pour login et chaque API CRUD ; parcours navigateur contre le backend réel — EX-06/13/14 et mentor |
 
-Pendant une tâche, écrire les tests ciblés avec le comportement concerné, puis lancer la suite du repository avant merge. Le TDD reste facultatif. Un cas précis par test ; commenter son intention et vérifier sa réussite avant de poursuivre, conformément au guidage.
+**Commandes présentes ou justifiées par la configuration :**
 
-**Couverture :**
+- Backend : `mvn test` ; `mvn clean test` est documentée. Les tests d’intégration existants sont inclus et nécessitent Docker.
+- Frontend : `npm test`, `npm run test:watch`. Jest configure déjà un rapport HTML de couverture.
+- Cypress : absent ; aucune commande E2E opérationnelle malgré la mention du README.
+- Couverture backend : aucun outil configuré. **Décision de projet :** ajouter JaCoCo pour produire la mesure exigée ; commande et périmètre à documenter après configuration.
 
-- Backend : rapport absent ; **JaCoCo proposé, à valider**, pour produire la preuve demandée.
-- Frontend : Jest génère déjà un rapport HTML. Définir les fichiers inclus, notamment ceux jamais importés par les tests ; aucun seuil n’est configuré.
-- E2E : outil de mesure et métrique à préciser. Un pourcentage de tests réussis ne démontre pas une couverture.
+Le Compose de tests ne remplace pas automatiquement Testcontainers. L’accès du conteneur de tests au moteur Docker et aux conteneurs MySQL créés doit être validé ; ne pas basculer les tests sur la base de développement.
 
-Les trois seuils officiels de **80 % minimum** restent distincts. Ils constituent un critère de clôture de l’exercice complet, sans prétendre qu’ils sont déjà atteints au MVP.
+**Couverture :** les trois seuils officiels de **80 %** restent distincts. Inclure les fichiers pertinents non exercés dans les mesures ; la configuration Jest actuelle ne définit ni `collectCoverageFrom` ni seuil. Confirmer métriques et exclusions, particulièrement pour les E2E : un pourcentage de tests réussis ne constitue pas une mesure de couverture.
 
-**EX-19 :** conserver « Ne testez pas les cas d’erreur » et « Ne vérifiez pas les effets de bord ». Ne pas étendre le plan selon les recommandations plus larges de l’audit avant clarification. Les tests d’erreur déjà présents doivent être signalés au mentor, sans suppression silencieuse. Faire préciser la méthode de vérification des erreurs affichées et des accès refusés ; les fonctionnalités correspondantes restent obligatoires.
-
-Les vérifications Postman et les parcours avec backend réel restent nécessaires : les E2E aux API mockées ne les remplacent pas.
+**Restriction EX-19 :** ne pas ajouter les cas d’erreur ni les vérifications d’effets de bord recommandés par l’audit sans clarification. Conserver et analyser les tests négatifs déjà présents, sans les supprimer arbitrairement. L’affichage des erreurs et la protection des accès restent obligatoires ; leur méthode de vérification doit être clarifiée avant de déclarer ces critères terminés.
 
 ## 11. Qualité et sécurité avant commit/merge
 
-**Avant commit :**
+**Décisions de projet, motivées par l’audit :**
 
-- Relire le diff et appliquer le formatage local.
-- Retirer débogage, imports et code inutilisés liés au changement.
-- Vérifier les fichiers indexés : aucun secret, token, mot de passe réel, export sensible ou artefact généré.
-- Lancer les tests ciblés.
+- Relire le diff ; vérifier nommage, imports, code mort et absence de reformatage parasite. Utiliser `git diff --check`, puis relire les changements indexés.
+- Compiler et lancer les tests concernés ; avant merge, vérifier le repository complet. Aucun contrôle fictif de lint ou d’analyse statique absent.
+- Pour une interface modifiée : contrôler petit écran, clavier, labels, focus et lisibilité des états.
+- Examiner les fichiers indexés, configurations, captures et logs : aucun secret réel, mot de passe ou JWT à publier.
+- Masquer la saisie des mots de passe et empêcher leur journalisation. Limiter l’exposition locale des services et d’Actuator.
+- Pour les identifiants déjà versionnés, déterminer s’ils ont été utilisés et remplacer ceux qui sont réels ou réutilisés. Les retirer du fichier courant n’efface pas l’historique.
 
-**Avant merge :**
-
-- Backend : `mvn verify`, avec Docker disponible.
-- Frontend : `npm test` et `npm run build`.
-- Exécuter les E2E pertinents dès que Cypress est opérationnel.
-- Pour un contrat modifié, vérifier Postman et le parcours frontend/backend concerné.
-- Pour un écran modifié, contrôler clavier, labels, focus et affichage étroit.
-- Masquer les mots de passe à la saisie et exclure mots de passe/JWT des logs et preuves.
-
-Ces contrôles répondent aux exigences et aux risques observés. Aucun scanner ni pipeline n’est actuellement configuré ; aucun nouveau scan réseau ou outil de qualité n’est imposé.
-
-Les identifiants déjà versionnés nécessitent une vérification de leur usage et un remplacement s’ils sont réels. Avant toute exposition hors du poste, traiter l’exposition Actuator signalée par l’audit.
+Aucun scanner, pipeline CI/CD ou outillage de production supplémentaire n’est rendu obligatoire par ce workflow.
 
 ## 12. Definition of Ready
 
 Une tâche peut commencer lorsque :
 
-- Son objectif et sa preuve d’acceptation sont compris.
-- Sa source est identifiée : EX, recommandation mentor ou décision de projet.
-- Ses dépendances et repositories concernés sont connus.
-- Les DTO et règles métier nécessaires sont définis.
-- L’environnement et les données fictives nécessaires sont prêts.
-- Aucun point non résolu ne bloque son implémentation ou sa vérification.
+- son objectif et sa source sont connus : EX, recommandation mentor ou décision de projet ;
+- ses critères d’acceptation sont observables ;
+- ses dépendances et repositories concernés sont identifiés ;
+- son contrat HTTP ou ses règles métier nécessaires sont définis ;
+- l’environnement et la méthode de vérification nécessaires sont prêts.
+
+Une ambiguïté bloque uniquement le travail qui en dépend. Les attributs étudiants ne sont pas inventés pour contourner EX-10.
 
 ## 13. Definition of Done
 
 Un travail est terminé lorsque :
 
-- Le comportement attendu fonctionne et respecte les couches/conventions.
-- Les tests pertinents et les contrôles de merge réussissent.
-- La preuve prévue est disponible, avec les commits concernés si nécessaire.
-- Les secrets et données sensibles sont exclus du code partagé et des preuves.
-- La documentation utile au lancement ou au contrat est actualisée.
-- Le diff est relu, les commits sont cohérents et l’intégration dans `main` est propre.
+- les critères d’acceptation sont satisfaits et démontrables ;
+- le code respecte les conventions et le contrat commun ;
+- les tests pertinents et contrôles du repository réussissent ;
+- les secrets, logs et fichiers locaux ont été vérifiés ;
+- la documentation utile et les commandes modifiées sont actualisées ;
+- le diff est relu, les commits sont cohérents et l’intégration sur `main` est propre ;
+- pour une modification transversale, les deux versions ont été vérifiées ensemble.
 
-Une vérification bloquée reste explicitement non réalisée ; elle ne compte pas comme réussie. La clôture du projet exige en plus toutes les exigences restantes, les trois couvertures et les éléments pédagogiques.
+Une vérification bloquée reste signalée ; elle n’est pas assimilée à une réussite. Les couvertures sont suivies pendant le développement ; les trois seuils de 80 % et l’ensemble du périmètre officiel conditionnent la fin du projet, pas chaque premier incrément.
 
 ## 14. Cycle de travail d’une tâche
 
-1. Sélectionner un objectif prêt ; après création du backlog, reprendre son identifiant.
-2. Partir de `main` à jour et créer une branche courte.
-3. Relire le code, le contrat et les tests concernés.
-4. Développer par petites étapes et exécuter les tests ciblés.
-5. Vérifier l’API ou le parcours, puis appliquer les contrôles avant merge.
-6. Relire et créer les commits Conventional Commits.
-7. Fusionner dans `main`, pousser et supprimer la branche.
-8. Noter brièvement le résultat, la preuve et les blocages ; solliciter le mentor uniquement pour une décision ou un retour utile.
+1. Sélectionner un item prêt et relire sa source.
+2. Actualiser `main`, puis créer une branche courte.
+3. Définir le comportement attendu et les vérifications.
+4. Développer par petites modifications dans l’environnement Docker.
+5. Exécuter les tests ciblés, puis les contrôles avant merge ; vérifier Postman ou le parcours réel lorsque requis.
+6. Relire les changements, contrôler les secrets et créer les commits cohérents.
+7. Fusionner et pousser ; utiliser une PR si une relecture apporte une valeur concrète.
+8. Consigner brièvement résultat, commandes, éventuel blocage et couple de commits. Présenter au mentor les décisions ou démonstrations utiles.
 
-La publication désigne ici le partage Git. Aucun déploiement de production n’est défini.
+La publication désigne ici le partage Git du travail validé. Aucun déploiement de production n’est présumé.
 
 ## 15. Décisions et points à valider
 
 | Point non résolu | Confirmation nécessaire |
 |---|---|
-| EX-19 et tests existants | Portée des exclusions ; traitement des tests d’erreur hérités ; preuve attendue pour erreurs affichées et accès refusés |
-| Couvertures | Métriques, périmètres, exclusions et rapports ; choix JaCoCo ; mesure E2E avec Cypress et API mockées |
-| Environnement | Acceptabilité du wrapper Maven 3.9.11 ; couple Node/npm ; version MySQL fixe ; ports et fonctionnement Spring Boot–Compose |
-| REC-MENTOR-001 | Gain réel d’une conteneurisation applicative avec volumes et processus de rechargement |
-| REC-MENTOR-002 | Chargement et priorité de `.env.local`, articulation avec Compose et retrait des secrets du suivi |
-| Contrat d’authentification | Format de réponse, conservation du token, durée de validité et destination après connexion, sans ajouter implicitement rôles ou renouvellement |
-| Étudiants | Champs, validations, identifiant et règles de suppression avant le CRUD |
-| Identifiants versionnés | Usage réel ou fictif et remplacement nécessaire |
-| Bilan pédagogique | Remises à niveau utiles, modèle des autoévaluations, formats de remise et nom de l’application à retenir |
+| Docker-first et versions | Confirmer avec le mentor l’exécution conteneurisée des prérequis ; résoudre Maven 3.9.3 contre wrapper 3.9.11 ; fixer Node/npm et MySQL |
+| Configuration locale | Valider nom/emplacement du fichier, injection Compose et adaptation du chargement `.env` Spring |
+| Orchestration | Valider fichiers/services, responsabilité de lancement MySQL, accès Docker pour Testcontainers et isolation des tests |
+| Hot reload | Démontrer la surveillance Angular et le mécanisme de recompilation/reprise Spring Boot |
+| Tests et couverture | Clarifier EX-19, le traitement des tests négatifs existants, les vérifications d’accès refusé et d’erreurs affichées ; définir les trois métriques, périmètres et rapports |
+| Données étudiants | Définir les champs et règles strictement nécessaires aux cinq opérations |
+| Authentification | Fixer le contrat de réponse, le traitement du token et les destinations de navigation nécessaires ; ne pas ajouter implicitement rôles ou renouvellement |
+| Secrets historiques | Déterminer l’usage réel des identifiants publiés et les mesures correctives nécessaires |
+| Bilan pédagogique | Confirmer les remises à niveau utiles, les modèles d’autoévaluation et les modalités de remise des preuves |
