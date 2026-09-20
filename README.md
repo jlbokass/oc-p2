@@ -8,7 +8,7 @@ Workspace de travail OpenClassrooms.
 - [Architecture](docs/architecture.md)
 - [Notes](docs/notes.md)
 - [Backlog](management/backlog.md)
-- [Sprint actuel](management/sprint.md)
+- [Sprint actuel](management/sprints/sprint-001.md)
 - [Rétrospective](management/retrospective.md)
 - [Point mentor](mentoring/current.md)
 - [Journal IA](journal/ai-journal.md)
