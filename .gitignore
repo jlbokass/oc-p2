@@ -1,16 +1,17 @@
-# Repositories applicatifs indépendants
+# Repositories applicatifs
 /repos/
 
-# Python
-__pycache__/
-*.py[cod]
-.venv/
+# IDE
+.idea/
+.vscode/
 
 # macOS
 .DS_Store
 
-# JetBrains
-.idea/
+# Environnement local / secrets
+.env
+.env.local
+.env.*.local
 
-# VS Code
-.vscode/
+# Exemple de configuration autorisé
+!.env.example
