@@ -106,7 +106,7 @@ Préserver une observation fidèle du starter, puis fournir le socle Docker rete
 - **Priorité :** P0
 - **MVP :** Oui
 - **Repository(s) :** workspace, backend, frontend
-- **Statut initial :** Ready
+- **Statut initial :** Done
 - **Sources :** EX-03, EX-04, PROJ-05, Décision workflow
 - **Dépend de :** Aucune
 - **Débloque :** SPIKE-002
@@ -132,7 +132,7 @@ Préserver une observation fidèle du starter, puis fournir le socle Docker rete
 - **Priorité :** P0
 - **MVP :** Oui
 - **Repository(s) :** workspace, backend, frontend
-- **Statut initial :** Blocked
+- **Statut initial :** Done
 - **Sources :** EX-02, PROJ-05, REC-MENTOR-001, REC-MENTOR-002, REC-MENTOR-005, REC-MENTOR-006, Décision workflow
 - **Dépend de :** SPIKE-001
 - **Débloque :** TECH-001, TECH-002
