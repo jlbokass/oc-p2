@@ -14,6 +14,8 @@ Le fichier `.env.example` documente les variables nécessaires avec des valeurs 
 - `DB_USER`
 - `DB_PASSWORD`
 - `DB_ROOT_PASSWORD`
+- `JWT_SECRET`
+- `JWT_EXPIRATION_MS`
 
 Le service backend reçoit également :
 
@@ -26,9 +28,9 @@ Le flux de configuration est :
 
 `.env.local`
 → Docker Compose
-→ variables d'environnement du conteneur backend
-→ Spring Boot
-→ `application.yml`
+→ Backend
+→ application.yaml
+→ jwtService
 
 Spring Boot résout directement :
 
