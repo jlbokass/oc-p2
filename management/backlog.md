@@ -35,28 +35,28 @@ L’ordre du tableau est l’ordre de réalisation proposé. Les dépendances ex
 
 Les tests ciblés accompagnent les fonctionnalités. Les items de tests après MVP servent à compléter le périmètre exhaustif et à démontrer les couvertures finales, sans réécrire systématiquement les tests déjà présents.
 
-Aucun sprint, aucune date, aucune vélocité, aucun story point et aucune estimation de durée ne sont définis. Ce document ne constate aucune implémentation ni exécution réussie.
+Aucune date, vélocité, story point ou estimation de durée n'est définie dans ce backlog. Les statuts **Done** reflètent uniquement des travaux déjà démontrés et archivés dans les documents de sprint/SPIKE ; les autres items ne présument aucune implémentation ni réussite.
 
 ## 2. MVP pédagogique
 
 Le MVP démontre le parcours **inscription d’un agent, puis connexion depuis Angular avec réception d’un JWT**, dans l’environnement **Docker-first** retenu.
 
-Il comprend l’observation du starter avant modification, le socle Docker de développement et de tests, la prise en compte des modifications de sources, les vérifications existantes et ciblées, ainsi qu’une preuve reproductible du parcours intégré.
+Il comprend l’observation du starter avant modification, le socle Docker de développement, le hot reload Angular demandé par le mentor, les vérifications existantes et ciblées, ainsi qu’une preuve reproductible du parcours intégré. L’environnement de tests isolé est traité séparément afin de ne pas bloquer le développement fonctionnel.
 
 L’observation initiale ne doit pas être réécrite après adaptation : si le starter ne peut pas fonctionner dans son état initial, l’obstacle est consigné. Une inscription réussie après adaptation prouve le fonctionnement de l’environnement adapté, pas celui du starter inchangé.
 
 | Item | Objectif | Repository(s) | Source(s) | Dépend de |
 |---|---|---|---|---|
 | SPIKE-001 | Observer le starter sans modification et établir ce qui est réellement vérifiable | workspace, backend, frontend | EX-03, EX-04 ; PROJ-05 ; Décision workflow | Aucune |
-| SPIKE-002 | Valider les références et mécanismes nécessaires au socle Docker | workspace, backend, frontend | EX-02 ; PROJ-05 ; REC-MENTOR-001/002/005/006 ; Décision workflow | SPIKE-001 |
+| SPIKE-002 | Valider les références et mécanismes nécessaires au socle Docker de développement | workspace, backend, frontend | EX-02 ; PROJ-05 ; REC-MENTOR-001/003/005/006 ; Décision workflow | SPIKE-001 |
 | SPIKE-003 | Définir le contrat minimal de connexion et le traitement du token | workspace, backend, frontend | EX-05, EX-07, EX-08 ; PROJ-01, PROJ-04 ; Décision workflow | Aucune |
 | SPIKE-004 | Clarifier la vérification des erreurs et refus d’accès sous EX-19 | workspace, backend, frontend | EX-08, EX-12, EX-15, EX-19 ; REC-MENTOR-004 ; Décision workflow | Aucune |
 | SPIKE-005 | Déterminer l’usage des identifiants déjà versionnés | workspace, backend | PROJ-02 ; Décision workflow | Aucune |
-| TECH-001 | Externaliser et charger correctement la configuration locale | workspace, backend, frontend | PROJ-02, PROJ-05 ; REC-MENTOR-005 ; Décision workflow | SPIKE-002 |
-| TECH-002 | Fournir le socle Docker de développement et de tests, avec rechargement démontré | workspace, backend, frontend | EX-02, EX-04 ; PROJ-05 ; REC-MENTOR-001/002/003/006 ; Décision workflow | TECH-001 |
-| TECH-003 | Analyser les tests existants et consigner leur exécution de référence | workspace, backend, frontend | EX-17 ; PROJ-07 ; REC-MENTOR-004 ; Décision workflow | TECH-002 |
-| TECH-004 | Appliquer les protections locales de confidentialité retenues | workspace, backend, frontend | PROJ-02, PROJ-03 ; Décision workflow | SPIKE-005, TECH-003 |
-| US-001 | Authentifier un agent par l’API et retourner un JWT | backend | EX-05, EX-06, EX-11, EX-16 ; PROJ-04 ; Décision workflow | SPIKE-003, TECH-003 |
+| TECH-001 | Externaliser et charger correctement la configuration locale | workspace, backend | PROJ-02, PROJ-05 ; REC-MENTOR-005 ; Décision workflow | SPIKE-002 |
+| TECH-002 | Fournir le socle Docker de développement avec hot reload Angular | workspace, backend, frontend | EX-02, EX-04 ; PROJ-05 ; REC-MENTOR-001/003/006 ; Décision workflow | TECH-001 |
+| TECH-003 | Stabiliser l'environnement de tests et analyser les tests existants | workspace, backend, frontend | EX-17 ; PROJ-07 ; REC-MENTOR-002/004 ; Décision workflow | TECH-002 |
+| TECH-004 | Appliquer les protections locales de confidentialité retenues | workspace, backend, frontend | PROJ-02, PROJ-03 ; Décision workflow | SPIKE-005, TECH-002 |
+| US-001 | Authentifier un agent par l’API et retourner un JWT | backend | EX-05, EX-06, EX-11, EX-16 ; PROJ-04 ; Décision workflow | SPIKE-003, TECH-002 |
 | US-002 | Connecter un agent depuis Angular et recevoir le JWT | frontend | EX-07, EX-08, EX-16 ; PROJ-04, PROJ-09 ; Décision workflow | SPIKE-004, US-001 |
 | TECH-005 | Constituer la preuve reproductible du MVP | workspace, backend, frontend | EX-04 à EX-08 ; PROJ-07 ; REC-MENTOR-003/004 ; Décision workflow | TECH-004, US-002 |
 
@@ -68,18 +68,18 @@ Les règles étudiants, la configuration de Cypress et les métriques finales de
 
 | Ordre | ID | Type | Epic | Titre | Priorité | MVP | Repository(s) | Statut | Dépend de | Sources |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | SPIKE-001 | SPIKE | EPIC-01 | Observer le starter sans modification | P0 | Oui | workspace, backend, frontend | Ready | Aucune | EX-03/04 ; PROJ-05 ; Décision workflow |
-| 2 | SPIKE-002 | SPIKE | EPIC-01 | Valider les références et mécanismes Docker | P0 | Oui | workspace, backend, frontend | Blocked | SPIKE-001 | EX-02 ; PROJ-05 ; REC-MENTOR-001/002/005/006 ; Décision workflow |
+| 1 | SPIKE-001 | SPIKE | EPIC-01 | Observer le starter sans modification | P0 | Oui | workspace, backend, frontend | Done | Aucune | EX-03/04 ; PROJ-05 ; Décision workflow |
+| 2 | SPIKE-002 | SPIKE | EPIC-01 | Valider les références et mécanismes Docker | P0 | Oui | workspace, backend, frontend | Done | SPIKE-001 | EX-02 ; PROJ-05 ; REC-MENTOR-001/003/005/006 ; Décision workflow |
 | 3 | SPIKE-003 | SPIKE | EPIC-03 | Définir le contrat de connexion | P0 | Oui | workspace, backend, frontend | Ready | Aucune | EX-05/07/08 ; PROJ-01/04 ; Décision workflow |
 | 4 | SPIKE-004 | SPIKE | EPIC-03 | Clarifier les vérifications sous EX-19 | P0 | Oui | workspace, backend, frontend | Ready | Aucune | EX-08/12/15/19 ; REC-MENTOR-004 ; Décision workflow |
 | 5 | SPIKE-005 | SPIKE | EPIC-02 | Qualifier les identifiants historiques | P1 | Oui | workspace, backend | Ready | Aucune | PROJ-02 ; Décision workflow |
-| 6 | TECH-001 | TECH | EPIC-01 | Externaliser la configuration locale | P0 | Oui | workspace, backend, frontend | To clarify | SPIKE-002 | PROJ-02/05 ; REC-MENTOR-005 ; Décision workflow |
-| 7 | TECH-002 | TECH | EPIC-01 | Fournir le socle Docker reproductible | P0 | Oui | workspace, backend, frontend | To clarify | TECH-001 | EX-02/04 ; PROJ-05 ; REC-MENTOR-001/002/003/006 ; Décision workflow |
-| 8 | TECH-003 | TECH | EPIC-01 | Analyser et exécuter les tests existants | P0 | Oui | workspace, backend, frontend | Blocked | TECH-002 | EX-17 ; PROJ-07 ; REC-MENTOR-004 ; Décision workflow |
-| 9 | TECH-004 | TECH | EPIC-02 | Protéger les données sensibles localement | P1 | Oui | workspace, backend, frontend | To clarify | SPIKE-005, TECH-003 | PROJ-02/03 ; Décision workflow |
-| 10 | US-001 | US | EPIC-03 | Authentifier un agent par l’API | P1 | Oui | backend | To clarify | SPIKE-003, TECH-003 | EX-05/06/11/16 ; PROJ-04 ; Décision workflow |
+| 6 | TECH-001 | TECH | EPIC-01 | Externaliser la configuration locale | P0 | Oui | workspace, backend | Ready | SPIKE-002 | PROJ-02/05 ; REC-MENTOR-005 ; Décision workflow |
+| 7 | TECH-002 | TECH | EPIC-01 | Fournir le socle Docker de développement | P0 | Oui | workspace, backend, frontend | Blocked | TECH-001 | EX-02/04 ; PROJ-05 ; REC-MENTOR-001/003/006 ; Décision workflow |
+| 8 | TECH-003 | TECH | EPIC-01 | Stabiliser l'environnement de tests et analyser les tests existants | P1 | Oui | workspace, backend, frontend | Blocked | TECH-002 | EX-17 ; PROJ-07 ; REC-MENTOR-002/004 ; Décision workflow |
+| 9 | TECH-004 | TECH | EPIC-02 | Protéger les données sensibles localement | P1 | Oui | workspace, backend, frontend | To clarify | SPIKE-005, TECH-002 | PROJ-02/03 ; Décision workflow |
+| 10 | US-001 | US | EPIC-03 | Authentifier un agent par l’API | P1 | Oui | backend | To clarify | SPIKE-003, TECH-002 | EX-05/06/11/16 ; PROJ-04 ; Décision workflow |
 | 11 | US-002 | US | EPIC-03 | Connecter un agent depuis Angular | P1 | Oui | frontend | To clarify | SPIKE-004, US-001 | EX-07/08/16 ; PROJ-04/09 ; Décision workflow |
-| 12 | TECH-005 | TECH | EPIC-03 | Démontrer le MVP intégré | P1 | Oui | workspace, backend, frontend | Blocked | TECH-004, US-002 | EX-04/05/06/07/08 ; PROJ-07 ; REC-MENTOR-003/004 ; Décision workflow |
+| 12 | TECH-005 | TECH | EPIC-03 | Démontrer le MVP intégré | P1 | Oui | workspace, backend, frontend | Blocked | TECH-003, TECH-004, US-002 | EX-04/05/06/07/08 ; PROJ-07 ; REC-MENTOR-003/004 ; Décision workflow |
 | 13 | SPIKE-006 | SPIKE | EPIC-04 | Définir le contrat minimal étudiants | P1 | Non | workspace, backend, frontend | Ready | Aucune | EX-09/10/11/12/14/15 ; PROJ-04 ; Décision workflow |
 | 14 | US-003 | US | EPIC-04 | Gérer les étudiants par API authentifiée | P1 | Non | backend | To clarify | SPIKE-004, SPIKE-006, US-002 | EX-09/11/12/13/16 ; PROJ-04 ; Décision workflow |
 | 15 | US-004 | US | EPIC-04 | Gérer les étudiants depuis Angular | P1 | Non | frontend | To clarify | US-003 | EX-14/15/16 ; Décision workflow |
@@ -111,20 +111,19 @@ Préserver une observation fidèle du starter, puis fournir le socle Docker rete
 - **Dépend de :** Aucune
 - **Débloque :** SPIKE-002
 
-**Question à résoudre :** comment les starters sont-ils organisés, et quelles étapes du parcours d’inscription peut-on réellement observer avant toute adaptation ?
+**Question résolue :** comment les starters sont-ils organisés, et quelles étapes du parcours d’inscription sont réellement vérifiables avant toute adaptation ?
 
-**Sortie attendue :** une note d’état initial distinguant lecture du code, fonctionnement exécuté et obstacles.
+**Résultat :** l’état initial a été observé et consigné avant les adaptations Docker. Les commits backend/frontend et l’absence de modification des starters ont été relevés.
 
 **Critères d’acceptation :**
 
-- [ ] Les classes et composants principaux, les couches et le chemin navigateur → proxy `/api` → backend → MySQL sont décrits.
-- [ ] Le contrat observé de `POST /api/register` est consigné : `firstName`, `lastName`, `login`, `password`, succès `201` sans corps.
-- [ ] Les moyens disponibles pour démarrer le starter sont relevés sans installer par défaut les runtimes sur l’hôte.
-- [ ] Si l’environnement initial le permet, `/register` est observé visuellement et une inscription est vérifiée par la réponse HTTP et une trace d’insertion sans donnée sensible.
-- [ ] Sinon, l’obstacle précis et les vérifications non réalisées sont consignés avant toute adaptation.
-- [ ] Aucun code applicatif ni configuration du starter n’est modifié pendant cette observation ; les commits observés sont relevés.
+- [x] Les classes et composants principaux, les couches et le chemin navigateur → proxy `/api` → backend → MySQL sont décrits.
+- [x] Le contrat observé de `POST /api/register` est consigné : `firstName`, `lastName`, `login`, `password`, succès `201` sans corps.
+- [x] Les moyens disponibles pour démarrer le starter sont relevés sans installer par défaut les runtimes sur l’hôte.
+- [x] Les vérifications exécutables et les obstacles éventuels de l’état initial sont distingués des résultats obtenus après adaptation.
+- [x] Aucun code applicatif ni configuration du starter n’a été modifié pendant l’observation ; les commits observés sont relevés.
 
-**Preuve attendue :** note d’exploration, références des fichiers et commits ; résultat HTTP et trace expurgée si l’exécution est possible, ou description vérifiable du blocage.
+**Preuve :** `docs/spike-001-starter-observation.md` et Sprint 001.
 
 #### SPIKE-002 — Valider les références et mécanismes Docker
 
@@ -133,35 +132,35 @@ Préserver une observation fidèle du starter, puis fournir le socle Docker rete
 - **MVP :** Oui
 - **Repository(s) :** workspace, backend, frontend
 - **Statut initial :** Done
-- **Sources :** EX-02, PROJ-05, REC-MENTOR-001, REC-MENTOR-002, REC-MENTOR-005, REC-MENTOR-006, Décision workflow
+- **Sources :** EX-02, PROJ-05, REC-MENTOR-001, REC-MENTOR-003, REC-MENTOR-005, REC-MENTOR-006, Décision workflow
 - **Dépend de :** SPIKE-001
 - **Débloque :** TECH-001, TECH-002
 
-**Question à résoudre :** quelles références et quels mécanismes permettent d’exécuter les applications et leurs tests dans Docker, conformément aux contraintes du workflow ?
+**Question résolue :** quels mécanismes permettent d’exécuter le frontend, le backend et MySQL dans un environnement Docker-first utilisable pour le développement ?
 
-**Sortie attendue :** une décision d’environnement accompagnée des preuves de faisabilité nécessaires. Les essais éventuels restent limités aux mécanismes à valider.
+**Résultat :** la faisabilité du socle Docker de développement est démontrée. Les sujets propres à l’environnement de tests (Compose de tests, Testcontainers, version MySQL de test) sont explicitement transférés à TECH-003.
 
 **Critères d’acceptation :**
 
-- [ ] Java 21 et Angular 19 restent les références ; l’écart Maven 3.9.3 / wrapper 3.9.11 reçoit une décision explicite, sans substitution silencieuse.
-- [ ] L’exécution conteneurisée des prérequis est présentée au mentor pour confirmer sa compatibilité avec les consignes officielles.
-- [ ] Les versions exactes de Node, npm et MySQL sont choisies et justifiées pour le projet ; leur compatibilité nécessaire est vérifiée.
-- [ ] Le nom, l’emplacement et le chargement du fichier local sont arrêtés ; `.env.local` reste une proposition jusqu’à cette décision.
-- [ ] L’interpolation Compose, l’injection des variables et l’adaptation d’`AppConfig`, qui lit actuellement `.env`, sont explicités.
-- [ ] Les raccordements proxy Angular → backend et backend → MySQL sont définis ; un responsable unique du démarrage MySQL est identifié.
-- [ ] Le mécanisme d’accès de Testcontainers au moteur Docker et à ses conteneurs est démontré sans utiliser la base de développement.
-- [ ] La surveillance Angular et la recompilation/reprise Spring Boot sont démontrées séparément ; un montage de sources seul n’est pas considéré comme une preuve de rechargement Java.
-- [ ] Les décisions et éventuels blocages résiduels sont identifiés avant de déclarer les TECH dépendantes Ready.
+- [x] Java 21 et Angular 19 restent les références ; l’écart Maven 3.9.3 / wrapper 3.9.11 est documenté sans substitution silencieuse.
+- [x] Les versions Node/npm utilisées dans le conteneur frontend sont relevées ; la nécessité de figer les versions définitives reste portée par TECH-002.
+- [x] Le fichier local de configuration et son exemple versionné sont définis selon le principe `.env.local` non versionné / `.env.example` versionné.
+- [x] L’interpolation Compose et l’injection des variables vers le backend sont démontrées.
+- [x] Le raccordement Angular → backend → MySQL est démontré avec le Compose global.
+- [x] Le Compose global est retenu comme responsable de l’orchestration ; l’orchestration concurrente de Spring Boot est désactivée dans l’environnement conteneurisé.
+- [x] Le hot reload Angular via bind mount est démontré.
+- [x] Le hot reload backend a été expérimenté puis explicitement non retenu comme exigence du socle de développement.
+- [x] Les limites Testcontainers / Docker Engine / `mysql:latest` sont documentées et transférées à TECH-003 sans bloquer le socle de développement.
 
-**Preuve attendue :** matrice des versions, décision de configuration et d’orchestration, retour mentor consigné, résultats expurgés des essais ciblés.
+**Preuve :** `docs/spike-002-docker-environment.md` et Sprint 001.
 
 #### TECH-001 — Externaliser la configuration locale
 
 - **Type :** TECH
 - **Priorité :** P0
 - **MVP :** Oui
-- **Repository(s) :** workspace, backend, frontend
-- **Statut initial :** To clarify
+- **Repository(s) :** workspace, backend
+- **Statut initial :** Ready
 - **Sources :** PROJ-02, PROJ-05, REC-MENTOR-005, Décision workflow
 - **Dépend de :** SPIKE-002
 - **Débloque :** TECH-002
@@ -170,69 +169,69 @@ Préserver une observation fidèle du starter, puis fournir le socle Docker rete
 
 **Critères d’acceptation :**
 
-- [ ] Le fichier local porte le nom et occupe l’emplacement décidés dans SPIKE-002 ; il est ignoré par le repository qui le contient.
+- [ ] `.env.local` est utilisé pour les valeurs locales / secrets nécessaires au Compose et reste non versionné.
+- [ ] `.env.example` est versionné avec uniquement des valeurs factices ou à renseigner.
 - [ ] Les fichiers locaux sensibles déjà suivis sont retirés du suivi courant ; aucun effacement de l’historique partagé n’est effectué.
-- [ ] Un fichier d’exemple versionné décrit les variables et utilise uniquement des valeurs factices.
 - [ ] `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT` et `DB_NAME` sont transmis au backend par le mécanisme retenu.
 - [ ] Le chargement Spring ne dépend plus accidentellement d’un fichier `.env` incompatible avec l’organisation choisie.
 - [ ] Aucun secret de base ou de signature JWT n’est transmis à Angular.
-- [ ] Le parcours des variables, depuis le fichier local jusqu’aux applications, est documenté et vérifiable sans afficher leurs valeurs sensibles.
+- [ ] Le parcours des variables, depuis le fichier local jusqu’au backend, est documenté et vérifiable sans afficher leurs valeurs sensibles.
 
 **Preuve attendue :** diff de configuration, vérification du suivi et des règles Git, exemple expurgé et contrôle du chargement effectif. L’usage historique des anciens identifiants est traité dans SPIKE-005 et TECH-004.
 
-#### TECH-002 — Fournir le socle Docker reproductible
-
-- **Type :** TECH
-- **Priorité :** P0
-- **MVP :** Oui
-- **Repository(s) :** workspace, backend, frontend
-- **Statut initial :** To clarify
-- **Sources :** EX-02, EX-04, PROJ-05, REC-MENTOR-001, REC-MENTOR-002, REC-MENTOR-003, REC-MENTOR-006, Décision workflow
-- **Dépend de :** TECH-001
-- **Débloque :** TECH-003
-
-**Résultat technique attendu :** un lancement commun des applications et de MySQL, un environnement de tests isolé et une boucle de développement avec rechargement démontré.
-
-**Critères d’acceptation :**
-
-- [ ] Un Compose global orchestre frontend, backend et MySQL avec les références validées.
-- [ ] Java, Maven, Node, npm et les outils Angular nécessaires s’exécutent dans les conteneurs ; aucune installation native de ces runtimes n’est exigée par la procédure courante.
-- [ ] Le proxy Angular joint le service backend, qui joint le service MySQL ; l’articulation avec `spring-boot-docker-compose` respecte la décision de SPIKE-002.
-- [ ] Une inscription depuis `/register` atteint réellement MySQL et produit une réponse `201` ; cette preuve est identifiée comme postérieure aux adaptations.
-- [ ] Un Compose dédié aux tests sépare configuration, ressources et données de celles du développement.
-- [ ] Les tests backend utilisant Testcontainers accèdent au moteur Docker et à leur base dédiée ; aucune commande courante de test ne supprime le volume de développement.
-- [ ] Les suites existantes sont exécutées dans ce socle ; leurs résultats sont conservés pour l’analyse de TECH-003. Tout échec empêche de prétendre que le socle est entièrement validé.
-- [ ] Les modifications Angular sont visibles sans reconstruction manuelle de l’image ; les dépendances restent dans l’environnement Linux du conteneur.
-- [ ] Une modification Java est recompilée et prise en compte par Spring Boot selon le mécanisme retenu.
-- [ ] Les caches nécessaires et les cas exigeant une reconstruction sont documentés.
-- [ ] Les commandes exactes de lancement, de test et d’arrêt sont documentées après vérification.
-
-**Preuve attendue :** fichiers d’orchestration, versions relevées dans les conteneurs, commandes réellement exécutées, inscription HTTP, résultats des suites et démonstrations de rechargement Angular/Java.
-
-#### TECH-003 — Analyser et exécuter les tests existants
+#### TECH-002 — Fournir le socle Docker de développement
 
 - **Type :** TECH
 - **Priorité :** P0
 - **MVP :** Oui
 - **Repository(s) :** workspace, backend, frontend
 - **Statut initial :** Blocked
-- **Sources :** EX-17, PROJ-07, REC-MENTOR-004, Décision workflow
-- **Dépend de :** TECH-002
-- **Débloque :** TECH-004, US-001, TECH-006
+- **Sources :** EX-02, EX-04, PROJ-05, REC-MENTOR-001, REC-MENTOR-003, REC-MENTOR-006, Décision workflow
+- **Dépend de :** TECH-001
+- **Débloque :** TECH-003, US-001
 
-**Résultat technique attendu :** un état de référence expliqué des tests existants et de leurs résultats, utilisable pour les développements suivants.
+**Résultat technique attendu :** un environnement Docker de développement reproductible permettant de lancer frontend, backend et MySQL, de vérifier l’inscription et de développer le frontend avec hot reload.
 
 **Critères d’acceptation :**
 
-- [ ] Les tests backend existants sont relus, inventoriés et classés entre services avec mocks et intégration controller/base.
-- [ ] Les entrées, sorties, dépendances et limites de ces tests sont expliquées.
-- [ ] Les tests frontend existants et leurs assertions sont inventoriés ; leurs limites sont distinguées d’un défaut d’exécution.
-- [ ] Les résultats de `mvn test` et `npm test`, exécutés dans le socle isolé, sont consignés.
-- [ ] Les résultats de TECH-002 peuvent servir de preuve commune si le code et l’environnement sont identiques ; aucune réexécution purement documentaire n’est imposée.
-- [ ] Les tests négatifs présents sont conservés et signalés à SPIKE-004 ; aucune suppression ni extension des cas d’erreur n’est décidée implicitement.
-- [ ] Un échec est qualifié et signalé ; les seuls correctifs intégrés à cet item sont ceux nécessaires au fonctionnement des suites existantes, dans le périmètre retenu.
+- [ ] Un Compose global versionné orchestre frontend, backend et MySQL avec des références explicites.
+- [ ] Java, Maven, Node, npm et les outils Angular nécessaires s’exécutent dans les conteneurs ; aucune installation native de ces runtimes n’est nécessaire au workflow courant.
+- [ ] Le proxy Angular joint le service backend, qui joint le service MySQL ; l’articulation avec `spring-boot-docker-compose` suit la décision de SPIKE-002.
+- [ ] Une inscription depuis `/register` atteint réellement MySQL et produit une réponse `201`.
+- [ ] Les modifications Angular sont visibles sans reconstruction manuelle de l’image grâce au bind mount et au mécanisme de surveillance retenu.
+- [ ] Les dépendances frontend restent dans l’environnement Linux du conteneur.
+- [ ] Le backend dispose d’une procédure simple de redémarrage après modification Java ; aucun hot reload backend n’est requis.
+- [ ] Les caches nécessaires et les cas exigeant une reconstruction sont documentés.
+- [ ] Les commandes exactes de lancement, d’arrêt et de reconstruction sont documentées après vérification.
 
-**Preuve attendue :** inventaire des tests, compte rendu d’analyse, commandes et résultats d’exécution associés aux versions utilisées.
+**Preuve attendue :** fichiers d’orchestration, versions relevées dans les conteneurs, commandes réellement exécutées, inscription HTTP persistée et démonstration du hot reload Angular.
+
+#### TECH-003 — Stabiliser l'environnement de tests et analyser les tests existants
+
+- **Type :** TECH
+- **Priorité :** P1
+- **MVP :** Oui
+- **Repository(s) :** workspace, backend, frontend
+- **Statut initial :** Blocked
+- **Sources :** EX-17, PROJ-07, REC-MENTOR-002, REC-MENTOR-004, Décision workflow
+- **Dépend de :** TECH-002
+- **Débloque :** TECH-005, TECH-006
+
+**Résultat technique attendu :** un environnement de tests isolé et reproductible, puis un état de référence expliqué des tests existants et de leurs résultats.
+
+**Critères d’acceptation :**
+
+- [ ] Un environnement/Compose dédié aux tests sépare configuration, ressources et données de celles du développement.
+- [ ] La version MySQL de test est fixée ; `mysql:latest` n’est pas utilisé comme référence reproductible.
+- [ ] La compatibilité Testcontainers / Docker Engine est résolue par une solution supportée et documentée.
+- [ ] Les tests backend utilisant Testcontainers accèdent au moteur Docker et à une base dédiée sans toucher au volume de développement.
+- [ ] Les tests backend existants sont relus, inventoriés et classés entre services avec mocks et intégration controller/base.
+- [ ] Les tests frontend existants et leurs assertions sont inventoriés ; leurs limites sont distinguées d’un défaut d’exécution.
+- [ ] `mvn test` et `npm test` sont exécutés dans l’environnement retenu et leurs résultats sont consignés.
+- [ ] Les tests négatifs présents sont conservés et signalés à SPIKE-004 ; aucune suppression ni extension des cas d’erreur n’est décidée implicitement.
+- [ ] Un échec est qualifié et signalé ; les correctifs sont limités à ce qui est nécessaire pour rendre l’environnement/suite de référence exploitable.
+
+**Preuve attendue :** fichiers de tests/orchestration, inventaire des tests, commandes et résultats d’exécution associés aux versions utilisées.
 
 ### EPIC-02 — Appliquer les protections locales retenues
 
@@ -271,7 +270,7 @@ Traiter les risques de confidentialité explicitement retenus par le workflow, s
 - **Repository(s) :** workspace, backend, frontend
 - **Statut initial :** To clarify
 - **Sources :** PROJ-02, PROJ-03, Décision workflow
-- **Dépend de :** SPIKE-005, TECH-003
+- **Dépend de :** SPIKE-005, TECH-002
 - **Débloque :** TECH-005
 
 **Résultat technique attendu :** les protections locales demandées par le workflow sont appliquées et démontrables.
@@ -352,7 +351,7 @@ Permettre à un agent enregistré de se connecter depuis Angular et de recevoir 
 - **Repository(s) :** backend
 - **Statut initial :** To clarify
 - **Sources :** EX-05, EX-06, EX-11, EX-16, PROJ-04, Décision workflow
-- **Dépend de :** SPIKE-003, TECH-003
+- **Dépend de :** SPIKE-003, TECH-002
 - **Débloque :** US-002
 
 **Valeur / comportement attendu :** un agent enregistré fournit ses identifiants valides à `/api/login` et reçoit un JWT utilisable selon le contrat retenu.
@@ -404,7 +403,7 @@ Permettre à un agent enregistré de se connecter depuis Angular et de recevoir 
 - **Repository(s) :** workspace, backend, frontend
 - **Statut initial :** Blocked
 - **Sources :** EX-04, EX-05, EX-06, EX-07, EX-08, PROJ-07, REC-MENTOR-003, REC-MENTOR-004, Décision workflow
-- **Dépend de :** TECH-004, US-002
+- **Dépend de :** TECH-003, TECH-004, US-002
 
 **Résultat technique attendu :** une preuve reproductible du parcours inscription → connexion dans l’environnement Docker retenu.
 
@@ -718,16 +717,16 @@ Permettre à l’apprenant d’évaluer les deux exercices et de faire le bilan 
 | Inconnue ou préalable | Traitement | Items empêchés d’être Ready |
 |---|---|---|
 | Possibilité d’observer l’inscription dans le starter inchangé | SPIKE-001 : exécution si possible, sinon obstacle consigné avant adaptation | SPIKE-002 tant que l’observation initiale n’est pas consignée |
-| Compatibilité Docker-first avec les consignes, écart Maven, versions Node/npm/MySQL | SPIKE-002 : décision explicite et validation des références | TECH-001, TECH-002 |
-| Nom et chargement du fichier local, adaptation d’`AppConfig`, raccordements et responsabilité MySQL | SPIKE-002 | TECH-001, TECH-002 |
-| Accès Docker depuis les tests conteneurisés, isolation et mécanismes de rechargement | SPIKE-002 | TECH-002 ; TECH-003 par dépendance |
+| Compatibilité Docker-first avec les consignes et écart Maven | SPIKE-002 : décisions et preuves archivées ; confirmation mentor non bloquante | Aucun item technique tant qu’aucune incompatibilité concrète n’est signalée |
+| Externalisation effective de la configuration locale | TECH-001 | TECH-002 |
+| Compose de tests, version MySQL de test et compatibilité Testcontainers/Docker Engine | TECH-003 | Validation finale du MVP et travaux de tests qui réutilisent cet environnement |
 | Usage réel ou réutilisation des identifiants historiques | SPIKE-005 | TECH-004, sans bloquer la nouvelle configuration locale |
 | Contrat de `/api/login`, paramètres JWT, traitement du token et navigation nécessaires | SPIKE-003 | US-001, US-002 |
 | Méthode de vérification des erreurs affichées, accès refusés et traitement des tests négatifs existants | SPIKE-004 | US-002, US-003, TECH-006 et validations associées |
 | Champs, validations, identifiant et règles nécessaires aux étudiants | SPIKE-006 | US-003, US-004 |
 | Métriques, périmètres et rapports des trois couvertures | SPIKE-008 | TECH-006 à TECH-009 ; aucun blocage du MVP |
 | Supports d’autoévaluation et modalités du bilan | SPIKE-007 | US-005, US-006 uniquement |
-| Environnement et suites existantes non encore démontrés | TECH-002 puis TECH-003 | Implémentations nécessitant ces moyens de vérification |
+| Socle Docker de développement non finalisé | TECH-001 puis TECH-002 | Travaux nécessitant l’environnement de développement reproductible |
 
 Les dépendances de réalisation restantes figurent dans les fiches et la vue ordonnée. Les remises à niveau optionnelles ne constituent aucun blocage technique dans l’état documenté.
 
@@ -738,9 +737,9 @@ La couverture ci-dessous décrit la **traçabilité prévue**, pas une conformit
 | Exigence EX-* | Item(s) du backlog | Couverture (MVP / Après MVP) | Remarque |
 |---|---|---|---|
 | EX-01 | SPIKE-007, US-006 | Après MVP | Besoins pédagogiques à clarifier ; aucune remise à niveau bloquante par défaut |
-| EX-02 | SPIKE-002, TECH-002 | MVP | Versions officielles distinguées de leur installation ; divergence Maven traitée explicitement |
+| EX-02 | SPIKE-002, TECH-002 | MVP | Versions officielles distinguées de leur installation ; socle Docker de développement retenu |
 | EX-03 | SPIKE-001 | MVP | Exploration sans modification |
-| EX-04 | SPIKE-001, TECH-002, TECH-005 | MVP | Observation initiale séparée de l’inscription vérifiée après adaptation |
+| EX-04 | SPIKE-001, TECH-002, TECH-005 | MVP | Observation initiale séparée de l’inscription vérifiée dans le socle Docker |
 | EX-05 | SPIKE-003, US-001 | MVP | Contrat puis authentification retournant un JWT |
 | EX-06 | US-001 | MVP | Vérification Postman |
 | EX-07 | SPIKE-003, US-002 | MVP | Écran simple, route, appel API et réception du token |
@@ -752,7 +751,7 @@ La couverture ci-dessous décrit la **traçabilité prévue**, pas une conformit
 | EX-13 | US-003 | Après MVP | Postman dès l’implémentation de chaque API |
 | EX-14 | US-004 | Après MVP | Cinq opérations Angular raccordées au backend réel |
 | EX-15 | SPIKE-004, US-004 | Après MVP | Guard et impossibilité d’accès sans connexion |
-| EX-16 | SPIKE-001, TECH-002, TECH-003, US-001, US-002, US-003, US-004 | MVP / Après MVP | Chaîne explicite : observation, environnement, authentification backend, frontend, API CRUD, écrans |
+| EX-16 | SPIKE-001, TECH-002, US-001, US-002, US-003, US-004 | MVP / Après MVP | Chaîne explicite : observation, environnement, authentification backend, frontend, API CRUD, écrans |
 | EX-17 | TECH-003 | MVP | Analyse et exécution des tests backend existants, réutilisées pour l’exercice de tests |
 | EX-18 | TECH-006 | Après MVP | Plan complet avec entrées et sorties attendues |
 | EX-19 | SPIKE-004, TECH-003, TECH-006 à TECH-009 | MVP / Après MVP | Restrictions conservées ; tests négatifs existants non supprimés arbitrairement |
@@ -773,12 +772,12 @@ L’ambiguïté de nom EtuBibliothèque/EduBibliothèque ne bloque aucun contrat
 
 | REC-MENTOR-* | Décision actuelle | Item(s) associé(s) | Commentaire |
 |---|---|---|---|
-| REC-MENTOR-001 | Retenue | SPIKE-002, TECH-002 | Compose global adopté ; raccordements et responsabilités à valider avant réalisation |
-| REC-MENTOR-002 | Retenue | SPIKE-002, TECH-002, TECH-003 | Compose de tests adopté ; isolation et fonctionnement de Testcontainers à démontrer |
+| REC-MENTOR-001 | Retenue | SPIKE-002, TECH-002 | Compose global adopté pour le développement ; raccordements validés puis à stabiliser |
+| REC-MENTOR-002 | Retenue | TECH-003 | Compose/environnement de tests dédié à stabiliser séparément du socle de développement |
 | REC-MENTOR-003 | Retenue | TECH-002, TECH-005 ; US-004 pour le parcours étudiants | Fonctionnement réel des composants et couple de commits ; les E2E mockés ne remplacent pas cette preuve |
 | REC-MENTOR-004 | Retenue, sous réserve du respect d’EX-19 | SPIKE-004, TECH-003, TECH-005, TECH-006 à TECH-009 | Vérifications pertinentes et correction des défauts démontrés, sans extension automatique aux recommandations de l’audit |
-| REC-MENTOR-005 | Retenue ; modalités à valider | SPIKE-002, TECH-001 | Fichier dédié et exemple sans secrets obligatoires selon la décision ; `.env.local` n’est pas encore un nom définitivement validé |
-| REC-MENTOR-006 | Retenue ; mécanismes à valider | SPIKE-002, TECH-002 | Volumes adoptés ; surveillance Angular et recompilation/reprise Java doivent être prouvées séparément |
+| REC-MENTOR-005 | Retenue | SPIKE-002, TECH-001 | `.env.local` non versionné et `.env.example` versionné constituent le mécanisme retenu ; TECH-001 doit le finaliser proprement |
+| REC-MENTOR-006 | Retenue pour le frontend | SPIKE-002, TECH-002 | Bind mount + hot reload Angular validés ; aucun hot reload backend n’est requis |
 
 La stratégie **Docker-first** est déjà retenue. Sa compatibilité avec la formulation des prérequis officiels reste à confirmer ; elle ne justifie pas d’imposer parallèlement une installation native des runtimes.
 
@@ -790,23 +789,20 @@ La stratégie **Docker-first** est déjà retenue. Sa compatibilité avec la for
 | PROJ-02 | SPIKE-005, TECH-001, TECH-004 ; US-001/002 pour la nouvelle connexion | Externalisation, usage des secrets historiques, saisie masquée et absence de données sensibles dans les logs sont explicitement retenus par le workflow. |
 | PROJ-03 | TECH-004 ; volet production différé | Le workflow impose une limitation locale des services et d’Actuator. Aucune cible de production n’autorise à définir une politique de livraison supplémentaire. |
 | PROJ-04 | SPIKE-003, US-001, US-002, SPIKE-006, US-003 | Authentification et CRUD sont désormais exigés par le cadrage. Seuls les contrats et règles encore absents restent à clarifier. |
-| PROJ-05 | SPIKE-001, SPIKE-002, TECH-001, TECH-002 | Les versions, la configuration, les raccordements et la reproductibilité sont nécessaires au MVP Docker-first retenu. Le défaut d’exécution directe du wrapper ne justifie pas seul une tâche si la procédure validée utilise Maven dans le conteneur. |
+| PROJ-05 | SPIKE-001, SPIKE-002, TECH-001, TECH-002, TECH-003 | Les versions, la configuration et les raccordements relèvent du socle de développement ; l’isolation des tests est traitée séparément dans TECH-003. |
 | PROJ-06 | Différé | Hébergement, TLS, distribution statique et routage de production sont hors périmètre défini. Le proxy de développement Docker est traité dans TECH-002. |
-| PROJ-07 | TECH-003, TECH-005, TECH-007, TECH-008, TECH-009 | Les suites, preuves du parcours réel et couvertures prescrites sont prises en compte. Aucun pipeline CI ni test automatisé traversant navigateur/API/base n’est ajouté sans décision ; les Cypress officiels utilisent des API mockées. |
-| PROJ-08 | Différé ; isolation locale couverte par TECH-002 | Aucun besoin documenté de conservation de données de production, migrations, sauvegardes ou retour arrière ne justifie un item. La non-destruction des données de développement par les tests est déjà exigée. |
+| PROJ-07 | TECH-003, TECH-005, TECH-007, TECH-008, TECH-009 | TECH-003 stabilise d’abord l’environnement et l’état de référence des tests ; les couvertures prescrites sont traitées ensuite. Aucun pipeline CI supplémentaire n’est imposé. |
+| PROJ-08 | Différé ; isolation des tests couverte par TECH-003 | Aucun besoin documenté de conservation de données de production, migrations, sauvegardes ou retour arrière ne justifie un item. La non-destruction des données de développement par les tests est déjà exigée. |
 | PROJ-09 | SPIKE-003, SPIKE-004, US-002, TECH-004 ; reste différé | Les erreurs de connexion et les logs sans données sensibles répondent aux sources retenues. Corrélation, collecte centralisée et campagnes de panne ne sont pas imposées. |
 
-## 9. Contrôle de cohérence avant Sprint 1
+## 9. Contrôle de cohérence avant import GitHub
 
-- [x] **Le MVP du workflow est entièrement représenté** : observation initiale, socle Docker de développement et de tests, rechargement, suites existantes, connexion backend, connexion Angular et preuve intégrée.
-- [x] **La frontière du MVP est conservée** : CRUD, couvertures exhaustives à 80 %, Cypress, autoévaluations et bilan restent après le jalon.
-- [x] **Aucune exigence claire n’est orpheline** : EX-01 à EX-29 disposent d’un rattachement, avec investigation explicite pour les ambiguïtés.
-- [x] **Aucun item Blocked ou To clarify n’est présenté comme démarrable** : seuls les SPIKE marqués Ready peuvent être sélectionnés immédiatement dans cet état initial.
-- [x] **Les dépendances sont sans cycle** : chaque dépendance explicite apparaît plus tôt dans la vue ordonnée.
-- [x] **L’ordre fonctionnel officiel est respecté** : authentification backend avant frontend, authentification complète avant API CRUD, puis écrans CRUD ; plan complet avant tests backend, frontend et E2E.
-- [x] **Les remises à niveau optionnelles ne bloquent pas le chemin technique** : aucune lacune concrète documentée ne justifie une telle dépendance.
-- [x] **Les versions et leur mode d’installation sont distingués** : références officielles préservées, exécution conteneurisée retenue, divergences soumises à clarification.
-- [x] **Les constats de l’audit ne deviennent pas automatiquement des obligations** : les traitements partiels et reports sont justifiés.
-- [x] **Les recommandations retenues sont distinguées de leurs modalités encore ouvertes** : aucun mécanisme non validé n’est présenté comme opérationnel.
-- [x] **Aucune preuve n’est présumée acquise** : observation, exécution, conformité et couverture devront être démontrées.
-- [x] **Aucun sprint ni estimation n’a été créé** : la construction du Sprint 1 reste une étape distincte après validation humaine du backlog.
+- [x] **SPIKE-001 et SPIKE-002 reflètent leur état réel** : ils sont `Done` et leurs preuves sont archivées dans les notes/Sprint 001.
+- [x] **TECH-001 est le prochain item démarrable** : les décisions nécessaires à l’externalisation de la configuration sont connues.
+- [x] **TECH-002 est correctement bloqué par TECH-001** : le socle Docker de développement ne dépend plus de Testcontainers ni du hot reload backend.
+- [x] **L’environnement de tests est séparé du développement** : Compose de tests, MySQL de test et Testcontainers sont regroupés dans TECH-003.
+- [x] **Le hot reload demandé par le mentor est conservé côté frontend** ; l’expérimentation backend est documentée mais non retenue comme exigence.
+- [x] **Le chemin fonctionnel reste prioritaire** : après le socle de développement, l’authentification backend/frontend peut avancer sans attendre la résolution exhaustive des tests.
+- [x] **Aucune exigence claire n’est orpheline** : EX-01 à EX-29 restent rattachées à un item ou une investigation.
+- [x] **Les recommandations mentor sont distinguées des exigences OpenClassrooms et des décisions de projet.**
+- [x] **Les statuts importés ne constituent pas des estimations** : GitHub Project servira désormais au suivi opérationnel.
