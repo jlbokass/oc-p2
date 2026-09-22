@@ -1,0 +1,45 @@
+services:
+  backend-test:
+    image: maven:3.9.11-eclipse-temurin-21
+    working_dir: /app
+
+    command: mvn test
+
+    environment:
+      # Configuration Spring minimale
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_NAME: test
+      DB_USER: test
+      DB_PASSWORD: test
+
+      JWT_SECRET: test-jwt-secret-012345678901234567890123456789
+      JWT_EXPIRATION_MS: 3600000
+
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+
+      # Testcontainers
+      DOCKER_HOST: unix:///var/run/docker.sock
+      TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: /var/run/docker.sock
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+
+    volumes:
+      - ./repos/backend:/app
+      - maven_test_cache:/root/.m2
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  frontend-test:
+    image: node:22-bookworm
+    working_dir: /app
+
+    command: >
+      sh -c "npm ci &&
+             npm test -- --runInBand"
+
+    volumes:
+      - ./repos/frontend:/app
+      - frontend_test_node_modules:/app/node_modules
+
+volumes:
+  maven_test_cache:
+  frontend_test_node_modules:
