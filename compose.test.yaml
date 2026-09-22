@@ -40,6 +40,8 @@ services:
       - ./repos/frontend:/app
       - frontend_test_node_modules:/app/node_modules
 
+
+
 volumes:
   maven_test_cache:
   frontend_test_node_modules:
